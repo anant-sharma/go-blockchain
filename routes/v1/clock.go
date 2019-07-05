@@ -1,7 +1,7 @@
 package v1router
 
 import (
-	v1controller "github.com/anant-sharma/go-boilerplate/controller/v1"
+	v1controller "github.com/anant-sharma/go-blockchain/controller/v1"
 	"github.com/gin-gonic/gin"
 )
 

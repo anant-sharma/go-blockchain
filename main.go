@@ -1,11 +1,13 @@
 package main
 
 import (
-	router "github.com/anant-sharma/go-boilerplate/routes"
+	"github.com/anant-sharma/go-blockchain/controller/v1/blockchain"
+	router "github.com/anant-sharma/go-blockchain/routes"
 )
 
 func main() {
 
-	router.InitRouter()
+	blockchain.CreateNewBlockchain()
 
+	router.InitRouter()
 }
