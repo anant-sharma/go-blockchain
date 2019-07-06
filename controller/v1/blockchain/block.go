@@ -2,16 +2,18 @@ package blockchain
 
 import (
 	"encoding/json"
+	"math"
 	"strings"
 	"time"
 
 	utils "github.com/anant-sharma/go-blockchain/common"
+	"github.com/anant-sharma/go-blockchain/controller/v1/pubsub"
 )
 
 // Block structure
 type Block struct {
 	Index             int
-	Timestamp         time.Time
+	Timestamp         int64
 	Transactions      []Transaction
 	Nonce             int
 	Hash              string
@@ -28,7 +30,7 @@ type BlockData struct {
 func (b *Blockchain) NewBlock(nonce int, previousBlockHash string, hash string) Block {
 	block := Block{
 		Index:             len(b.Chain) + 1,
-		Timestamp:         time.Now(),
+		Timestamp:         int64(math.Ceil(float64(time.Now().UnixNano() / 1000000))),
 		Transactions:      make([]Transaction, 0),
 		Nonce:             nonce,
 		Hash:              hash,
@@ -62,11 +64,10 @@ func (b *Blockchain) MineBlock() Block {
 
 	newBlock := b.NewBlock(nonce, lastBlock.Hash, blockHash)
 
-	// TODO
-	// this.pubsub.publish({
-	// 	Data: newBlock,
-	// 	Event: PUBSUB_EVENTS.BLOCK.MINED,
-	// });
+	pubsub.Publish(pubsub.Message{
+		Event: pubsub.PubSubEvents.BlockMined,
+		Data:  newBlock,
+	})
 
 	return newBlock
 }

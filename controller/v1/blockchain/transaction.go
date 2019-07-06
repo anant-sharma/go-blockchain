@@ -2,6 +2,7 @@ package blockchain
 
 import (
 	utils "github.com/anant-sharma/go-blockchain/common"
+	"github.com/anant-sharma/go-blockchain/controller/v1/pubsub"
 )
 
 // Transaction structure
@@ -15,17 +16,19 @@ type Transaction struct {
 // NewTransaction to create new transaction
 func NewTransaction(amount float64, sender string, recipient string) Transaction {
 
-	// this.pubsub.publish({
-	// 	Data: transaction,
-	// 	Event: PUBSUB_EVENTS.TRANSACTION.CREATED,
-	// });
-
-	return Transaction{
+	transaction := Transaction{
 		Amount:        amount,
 		Recipient:     recipient,
 		Sender:        sender,
 		TransactionID: utils.GenerateUUID(),
 	}
+
+	pubsub.Publish(pubsub.Message{
+		Event: pubsub.PubSubEvents.TransactionCreated,
+		Data:  transaction,
+	})
+
+	return transaction
 }
 
 // AddTransactionToPendingTransactions to add transaction to chain
