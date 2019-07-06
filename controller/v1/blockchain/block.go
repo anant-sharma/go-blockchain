@@ -12,12 +12,12 @@ import (
 
 // Block structure
 type Block struct {
+	Hash              string
 	Index             int
+	Nonce             int
+	PreviousBlockHash string
 	Timestamp         int64
 	Transactions      []Transaction
-	Nonce             int
-	Hash              string
-	PreviousBlockHash string
 }
 
 // BlockData structure
@@ -28,13 +28,21 @@ type BlockData struct {
 
 // NewBlock - To create new block
 func (b *Blockchain) NewBlock(nonce int, previousBlockHash string, hash string) Block {
+
+	var timestamp int64
+	if len(b.Chain) == 0 {
+		timestamp = 0
+	} else {
+		timestamp = int64(math.Ceil(float64(time.Now().UnixNano() / 1000000)))
+	}
+
 	block := Block{
-		Index:             len(b.Chain) + 1,
-		Timestamp:         int64(math.Ceil(float64(time.Now().UnixNano() / 1000000))),
-		Transactions:      make([]Transaction, 0),
-		Nonce:             nonce,
 		Hash:              hash,
+		Index:             len(b.Chain) + 1,
+		Nonce:             nonce,
 		PreviousBlockHash: previousBlockHash,
+		Timestamp:         timestamp,
+		Transactions:      make([]Transaction, 0),
 	}
 
 	b.PendingTransactions = make([]Transaction, 0)
