@@ -9,7 +9,7 @@ import (
 
 // InitTransactionRouter function
 func InitTransactionRouter(router *gin.RouterGroup) {
-	router.GET("", func(ctx *gin.Context) {
+	router.POST("", func(ctx *gin.Context) {
 		transaction := blockchain.NewTransaction(100, "a", "b")
 		ctx.JSON(http.StatusOK, transaction)
 	})

@@ -9,7 +9,7 @@ import (
 
 // InitMineRouter function
 func InitMineRouter(router *gin.RouterGroup) {
-	router.GET("", func(ctx *gin.Context) {
+	router.POST("", func(ctx *gin.Context) {
 		NewBlock := blockchain.B.MineBlock()
 		ctx.JSON(http.StatusOK, NewBlock)
 	})

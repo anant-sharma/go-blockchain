@@ -23,10 +23,12 @@ func NewTransaction(amount float64, sender string, recipient string) Transaction
 		TransactionID: utils.GenerateUUID(),
 	}
 
-	pubsub.Publish(pubsub.Message{
-		Event: pubsub.PubSubEvents.TransactionCreated,
-		Data:  transaction,
-	})
+	go func() {
+		pubsub.Publish(pubsub.Message{
+			Event: pubsub.PubSubEvents.TransactionCreated,
+			Data:  transaction,
+		})
+	}()
 
 	return transaction
 }

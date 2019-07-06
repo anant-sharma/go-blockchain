@@ -1,8 +1,7 @@
 package pubsub
 
 import (
-	"bytes"
-	"encoding/binary"
+	"encoding/json"
 	"log"
 
 	"github.com/streadway/amqp"
@@ -65,12 +64,30 @@ func NewPubSub(exchange string, queue string) {
 
 // Publish Method
 func Publish(data Message) {
+	_mq.Publish(_pubsub.exchange, _pubsub.queue, data)
+}
 
-	buf := &bytes.Buffer{}
-	err := binary.Read(buf, binary.BigEndian, &data)
-	if err != nil {
-		panic(err)
-	}
+// Subscribe Method
+func Subscribe() <-chan Message {
+	messages := _mq.EstablishWorker(_pubsub.queue)
 
-	_mq.Publish(_pubsub.exchange, _pubsub.queue, []byte(buf.Bytes()))
+	channel := make(chan Message)
+
+	go func() {
+		for d := range messages {
+			if d.Body != nil {
+				var j Message
+				json.Unmarshal(d.Body, &j)
+
+				go func() {
+					channel <- j
+				}()
+
+				log.Printf(" [x] %s", d.Body)
+			}
+		}
+	}()
+
+	log.Printf("[*] Subscribed to queue %s", _pubsub.queue)
+	return channel
 }
