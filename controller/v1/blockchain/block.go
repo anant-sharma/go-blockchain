@@ -85,7 +85,7 @@ func (b *Blockchain) AddMinedBlockToChain(newBlock Block) {
 	lastBlock := b.GetLastBlock()
 
 	// Check if hashes matches
-	isHashCorrect := lastBlock.Hash == newBlock.Hash
+	isHashCorrect := lastBlock.Hash == newBlock.PreviousBlockHash
 
 	isIndexCorrect := lastBlock.Index+1 == newBlock.Index
 
