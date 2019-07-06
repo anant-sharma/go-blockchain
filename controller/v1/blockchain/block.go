@@ -42,7 +42,7 @@ func (b *Blockchain) NewBlock(nonce int, previousBlockHash string, hash string) 
 		Nonce:             nonce,
 		PreviousBlockHash: previousBlockHash,
 		Timestamp:         timestamp,
-		Transactions:      make([]Transaction, 0),
+		Transactions:      b.PendingTransactions,
 	}
 
 	b.PendingTransactions = make([]Transaction, 0)
