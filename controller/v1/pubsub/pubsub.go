@@ -6,8 +6,8 @@ import (
 
 	"github.com/streadway/amqp"
 
-	"github.com/anant-sharma/go-blockchain/common/mq"
 	"github.com/anant-sharma/go-blockchain/config"
+	"github.com/anant-sharma/go-utils/mq"
 )
 
 // PubSub Struct
