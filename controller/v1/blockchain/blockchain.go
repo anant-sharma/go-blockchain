@@ -51,5 +51,9 @@ func CreateNewBlockchain() Blockchain {
 		}
 	}()
 
+	go func() {
+		B.RequestChain()
+	}()
+
 	return B
 }
