@@ -14,7 +14,8 @@ import (
 	"github.com/streadway/amqp"
 )
 
-type chainRequest struct {
+// ChainRequest Structure
+type ChainRequest struct {
 	ReplyQueue string
 }
 
@@ -37,7 +38,7 @@ func (b *Blockchain) RequestChain() {
 
 	// Publish Chain Request
 	pubsub.Publish(pubsub.Message{
-		Data: chainRequest{
+		Data: ChainRequest{
 			ReplyQueue: queue,
 		},
 		Event: pubsub.PubSubEvents.ChainRequested,
@@ -105,6 +106,16 @@ func (b *Blockchain) SynchroniseChain(chain Blockchain) {
 	}
 }
 
+// PublishChain for peer nodes to sync
+func (b *Blockchain) PublishChain(replyQueue string) {
+	msg := pubsub.Message{
+		Event: pubsub.PubSubEvents.ChainPublished,
+		Data:  b,
+	}
+
+	_mq.WriteToQueue(replyQueue, msg)
+}
+
 func isChainValid(chain []Block) bool {
 	isValid := true
 
@@ -113,14 +124,14 @@ func isChainValid(chain []Block) bool {
 		previousBlock := chain[i-1]
 
 		// Hash Matching
-		if previousBlock.Hash != block.Hash {
+		if previousBlock.Hash != block.PreviousBlockHash {
 			isValid = false
 			break
 		}
 
 		// Check Current Block Hash
 		if (block.Hash != HashBlock(previousBlock.Hash, BlockData{
-			Index:        i,
+			Index:        i + 1,
 			Transactions: block.Transactions,
 		}, block.Nonce)) {
 			isValid = false

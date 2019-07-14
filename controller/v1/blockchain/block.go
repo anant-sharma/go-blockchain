@@ -3,6 +3,7 @@ package blockchain
 import (
 	"encoding/json"
 	"math"
+	"strconv"
 	"strings"
 	"time"
 
@@ -59,7 +60,7 @@ func (b *Blockchain) GetLastBlock() Block {
 // MineBlock of blockchain
 func (b *Blockchain) MineBlock() Block {
 	lastBlock := b.GetLastBlock()
-	previousBlockHash := lastBlock.PreviousBlockHash
+	previousBlockHash := lastBlock.Hash
 
 	currentBlockData := BlockData{
 		Index:        lastBlock.Index + 1,
@@ -70,7 +71,7 @@ func (b *Blockchain) MineBlock() Block {
 
 	blockHash := HashBlock(previousBlockHash, currentBlockData, nonce)
 
-	newBlock := b.NewBlock(nonce, lastBlock.Hash, blockHash)
+	newBlock := b.NewBlock(nonce, previousBlockHash, blockHash)
 
 	pubsub.Publish(pubsub.Message{
 		Event: pubsub.PubSubEvents.BlockMined,
@@ -103,7 +104,7 @@ func HashBlock(previousBlockHash string, currentBlockData BlockData, nonce int) 
 		panic(err)
 	}
 
-	data := previousBlockHash + string(nonce) + string(blockDataString)
+	data := previousBlockHash + strconv.Itoa(nonce) + string(blockDataString)
 
 	return utils.Sha256(data)
 }

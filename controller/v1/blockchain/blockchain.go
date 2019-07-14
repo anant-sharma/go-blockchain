@@ -47,6 +47,12 @@ func CreateNewBlockchain() Blockchain {
 					mapstructure.Decode(msg.Data, &block)
 					B.AddMinedBlockToChain(block)
 				}
+			case pubsub.PubSubEvents.ChainRequested:
+				{
+					var chainRequest ChainRequest
+					mapstructure.Decode(msg.Data, &chainRequest)
+					B.PublishChain(chainRequest.ReplyQueue)
+				}
 			}
 		}
 	}()
