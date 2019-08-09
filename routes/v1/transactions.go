@@ -9,9 +9,10 @@ import (
 )
 
 type transactionInput struct {
-	Amount    float64
-	Sender    string
-	Recipient string
+	Data         string
+	DataCategory string
+	Sender       string
+	Recipient    string
 }
 
 // InitTransactionRouter function
@@ -22,7 +23,7 @@ func InitTransactionRouter(router *gin.RouterGroup) {
 		var tx transactionInput
 		json.Unmarshal(form, &tx)
 
-		transaction := blockchain.NewTransaction(tx.Amount, tx.Sender, tx.Recipient)
+		transaction := blockchain.NewTransaction(tx.Data, tx.DataCategory, tx.Sender, tx.Recipient)
 		ctx.JSON(http.StatusOK, transaction)
 	})
 }

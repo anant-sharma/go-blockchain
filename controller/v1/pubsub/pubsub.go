@@ -53,7 +53,7 @@ func NewPubSub(exchange string, queue string) {
 
 	// Bind Exchange Log Queue
 	_mq.BindQueueWithExchange(exchange+"-logs", exchange, "", amqp.Table{
-		"message-ttl": int64(86400),
+		"x-message-ttl": int64(86400),
 	})
 
 	_pubsub = PubSub{

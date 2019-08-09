@@ -7,17 +7,21 @@ import (
 
 // Transaction structure
 type Transaction struct {
-	Amount        float64
+	Checksum      string
+	Data          string
+	DataCategory  string
 	Recipient     string
 	Sender        string
 	TransactionID string
 }
 
 // NewTransaction to create new transaction
-func NewTransaction(amount float64, sender string, recipient string) Transaction {
+func NewTransaction(data string, dataCategory string, sender string, recipient string) Transaction {
 
 	transaction := Transaction{
-		Amount:        amount,
+		Checksum:      utils.Sha256(data),
+		Data:          data,
+		DataCategory:  dataCategory,
 		Recipient:     recipient,
 		Sender:        sender,
 		TransactionID: utils.GenerateUUID(),
