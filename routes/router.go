@@ -4,7 +4,7 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/anant-sharma/go-blockchain/config"
+	config "github.com/anant-sharma/go-blockchain-config"
 	v1Router "github.com/anant-sharma/go-blockchain/routes/v1"
 	"github.com/gin-gonic/gin"
 )

@@ -8,8 +8,8 @@ import (
 	"github.com/anant-sharma/go-blockchain/controller/v1/pubsub"
 	"github.com/mitchellh/mapstructure"
 
+	config "github.com/anant-sharma/go-blockchain-config"
 	utils "github.com/anant-sharma/go-blockchain/common"
-	"github.com/anant-sharma/go-blockchain/config"
 	"github.com/anant-sharma/go-utils/mq"
 	"github.com/streadway/amqp"
 )

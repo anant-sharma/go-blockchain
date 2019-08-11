@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/uuid"
 
-	Config "github.com/anant-sharma/go-blockchain/config"
+	Config "github.com/anant-sharma/go-blockchain-config"
 	jwt "github.com/dgrijalva/jwt-go"
 )
 

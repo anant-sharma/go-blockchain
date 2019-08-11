@@ -5,6 +5,12 @@
 		},
 		{
 			"path": "../go-utils"
+		},
+		{
+			"path": "/Users/anant/go/src/github.com/anant-sharma/go-blockchain-events"
+		},
+		{
+			"path": "/Users/anant/go/src/github.com/anant-sharma/go-blockchain-config"
 		}
 	],
 	"settings": {}
