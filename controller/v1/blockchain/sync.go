@@ -9,7 +9,7 @@ import (
 	"github.com/mitchellh/mapstructure"
 
 	config "github.com/anant-sharma/go-blockchain-config"
-	utils "github.com/anant-sharma/go-blockchain/common"
+	"github.com/anant-sharma/go-utils"
 	"github.com/anant-sharma/go-utils/mq"
 	"github.com/streadway/amqp"
 )

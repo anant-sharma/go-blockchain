@@ -1,11 +1,7 @@
-package utils
+package authutils
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
 	"time"
-
-	"github.com/google/uuid"
 
 	Config "github.com/anant-sharma/go-blockchain-config"
 	jwt "github.com/dgrijalva/jwt-go"
@@ -36,17 +32,4 @@ func GenToken(id uint) (string, error) {
 	/* Sign the token with our secret */
 	return jwtToken.SignedString(myJwtSigningKey)
 
-}
-
-// Sha256 to generate sha256
-func Sha256(data string) string {
-	h := sha256.New()
-	h.Write([]byte(data))
-	hashed := h.Sum(nil)
-	return hex.EncodeToString(hashed)
-}
-
-// GenerateUUID - Function to generate UUID
-func GenerateUUID() string {
-	return uuid.New().String()
 }

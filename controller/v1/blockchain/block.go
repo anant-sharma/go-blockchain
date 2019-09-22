@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	utils "github.com/anant-sharma/go-blockchain/common"
 	"github.com/anant-sharma/go-blockchain/controller/v1/pubsub"
+	"github.com/anant-sharma/go-utils"
 )
 
 // Block structure

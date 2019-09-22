@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"time"
 
-	utils "github.com/anant-sharma/go-blockchain/common"
-	Config "github.com/anant-sharma/go-blockchain/config"
+	Config "github.com/anant-sharma/go-blockchain-config"
+	authutils "github.com/anant-sharma/go-blockchain/common"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,7 +20,7 @@ Authenticate function to authenticate user
 func Authenticate(c *gin.Context) {
 
 	/* Generate Token */
-	token, err := utils.GenToken(1)
+	token, err := authutils.GenToken(1)
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
